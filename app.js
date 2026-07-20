@@ -1,5 +1,7 @@
 console.log("App gestartet");
 
+let inventur = {};
+
 const fragen = [
     {
         typ: "info",
@@ -85,10 +87,7 @@ function zeigeFrage() {
 
 function antwortJa() {
 
-    localStorage.setItem(
-        fragen[aktuelleFrage].artikel,
-        "ja"
-    );
+    inventur[fragen[aktuelleFrage].artikel] = "ja";
 
     naechsteFrage();
 }
@@ -96,10 +95,7 @@ function antwortJa() {
 
 function antwortNein() {
 
-    localStorage.setItem(
-        fragen[aktuelleFrage].artikel,
-        "nein"
-    );
+    inventur[fragen[aktuelleFrage].artikel] = "nein";
 
     naechsteFrage();
 }
@@ -114,8 +110,25 @@ function naechsteFrage() {
 
     } else {
 
+        localStorage.setItem(
+            "cortasiell_inventar",
+            JSON.stringify(inventur)
+        );
+
         document.getElementById("frage").innerHTML =
             "<h2>Inventur abgeschlossen ✅</h2>";
+        
+        document.getElementById("frage").innerHTML =
+        `
+        <h2>Inventur abgeschlossen ✅</h2>
+
+        <pre>
+        ${JSON.stringify(inventur, null, 2)}
+        </pre>
+        <button onclick="synchronisieren()">
+            Synchronisieren
+        </button>
+        `;
     }
 
 }
@@ -125,10 +138,7 @@ function speichereAnzahl() {
     const wert =
         document.getElementById("anzahlFeld").value;
 
-    localStorage.setItem(
-        fragen[aktuelleFrage].artikel,
-        wert
-    );
+    inventur[fragen[aktuelleFrage].artikel] = wert;
 
     naechsteFrage();
 }
@@ -157,5 +167,36 @@ if ("serviceWorker" in navigator) {
             console.log("Service Worker registriert");
 
         });
+
+}
+
+async function synchronisieren() {
+
+    const daten = JSON.parse(
+        localStorage.getItem("cortasiell_inventar")
+    );
+
+    const url =
+        "https://script.google.com/macros/s/AKfycbyBWXe_KY_Q73Uc7kz-2iMmnJGLcmB2to1OVN5CgosXIzfZH5aU1nxbq-EtwerCn0QidA/exec";
+
+    try {
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(daten)
+        });
+
+        const result = await response.text();
+
+        alert("Synchronisiert: " + result);
+
+    } catch (error) {
+
+        alert("Fehler: " + error);
+
+    }
 
 }
