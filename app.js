@@ -176,8 +176,10 @@ async function synchronisieren() {
         localStorage.getItem("cortasiell_inventar")
     );
 
+    console.log(url);
+
     const url =
-        "https://script.google.com/macros/s/AKfycbz82fgRM--kVVLGaLBFxGB9rw5h5geBYbpZF86DWhc28QnKS_-W17YGKrsjjucKK8-Ckg/exec";
+        "https://script.google.com/macros/library/d/1PHrQxNLEwuVIvfQ7FENRr3FhzQ-QA2RcT9vjrxFKd6yj4sRJNTfsZ_8q/2";
 
     try {
 
