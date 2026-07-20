@@ -132,3 +132,18 @@ function speichereAnzahl() {
 
     naechsteFrage();
 }
+
+function zeigeSpeicher() {
+
+    let ausgabe = "";
+
+    for (let i = 0; i < localStorage.length; i++) {
+
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+
+        ausgabe += key + ": " + value + "\n";
+    }
+
+    alert(ausgabe);
+}
