@@ -177,7 +177,7 @@ async function synchronisieren() {
     );
 
     const url =
-        "https://script.google.com/macros/s/AKfycbyBWXe_KY_Q73Uc7kz-2iMmnJGLcmB2to1OVN5CgosXIzfZH5aU1nxbq-EtwerCn0QidA/exec";
+        "https://script.google.com/macros/s/AKfycbz82fgRM--kVVLGaLBFxGB9rw5h5geBYbpZF86DWhc28QnKS_-W17YGKrsjjucKK8-Ckg/exec";
 
     try {
 
