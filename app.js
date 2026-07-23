@@ -173,12 +173,15 @@ if ("serviceWorker" in navigator) {
 async function synchronisieren() {
 
     const url =
-        "https://script.google.com/macros/s/AKfycbwanogPjcWXjI8gvu8qkeU_9gk_AZ8bVK7zFcAPlCTMIdtntauhVXz8HPCRx711Jg2S/exec";
+        "https://script.google.com/macros/s/AKfycbzeZDxQWp-wCa-kKQVZsFaIRG3WN6dhOtQLSLq6TZt5vPTHczjwdsVr4pCeW3IGxddOIg/exec";
 
     try {
 
         const response = await fetch(url, {
-            method: "GET"
+            method: "POST",
+            body: JSON.stringify({
+                test: "Hallo Cortasiell"
+            })
         });
 
         const text = await response.text();
