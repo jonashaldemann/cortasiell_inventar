@@ -1,6 +1,36 @@
+@font-face {
+    font-family: "Nudica";
+    src:
+        url("./fonts/nudica-light-webfont.woff2") format("woff2"),
+        url("./fonts/nudica-light-webfont.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Nudica";
+    src:
+        url("./fonts/nudica-medium-webfont.woff2") format("woff2"),
+        url("./fonts/nudica-medium-webfont.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Nudica";
+    src:
+        url("./fonts/nudica-regular-webfont.woff2") format("woff2"),
+        url("./fonts/nudica-regular-webfont.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial;
-    padding: 20px;
+    font-family: "Nudica", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
 }
 
 button {
