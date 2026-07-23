@@ -179,18 +179,20 @@ async function synchronisieren() {
 
     try {
 
-        const response = await fetch(url, {
+        await fetch(url, {
             method: "POST",
+            mode: "no-cors",
             body: localStorage.getItem(
                 "cortasiell_inventar"
             )
         });
 
-        const text = await response.text();
+        alert("Inventur übertragen ✅");
 
-        console.log(text);
-
-        alert(text);
+        localStorage.setItem(
+            "synchronisiert",
+            "ja"
+        );
 
     } catch (error) {
 
