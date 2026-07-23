@@ -172,6 +172,8 @@ if ("serviceWorker" in navigator) {
 
 async function synchronisieren() {
 
+    alert("TEST 123");
+
     const url =
         "https://script.google.com/macros/s/AKfycbzeZDxQWp-wCa-kKQVZsFaIRG3WN6dhOtQLSLq6TZt5vPTHczjwdsVr4pCeW3IGxddOIg/exec";
 
