@@ -1,4 +1,4 @@
-const CACHE_NAME = "cortasiell-v7";
+const CACHE_NAME = "cortasiell-v8";
 
 const FILES_TO_CACHE = [
     "./",
