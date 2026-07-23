@@ -1,4 +1,4 @@
-const CACHE_NAME = "cortasiell-v2";
+const CACHE_NAME = "cortasiell-v3";
 
 const FILES_TO_CACHE = [
     "./",
@@ -20,6 +20,12 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
+
+    const url = new URL(event.request.url);
+
+    if (url.hostname === "script.google.com") {
+        return;
+    }
 
     event.respondWith(
 
