@@ -173,7 +173,7 @@ if ("serviceWorker" in navigator) {
 async function synchronisieren() {
 
     const url =
-        "https://script.google.com/macros/s/AKfycbyAGvyV0_YfkcEzUfZ3Kc7jPHrerYB9_ljW_N2zYLqBzrHO0SgiB0rsfRD1phSgHWg7rQ/exec";
+        "https://script.google.com/macros/s/AKfycbz1nLynHl3uSXS1XfkTZu4PUy0H5LUZbrabDzlPaWzzY0zCxEFdeQGC2Dsg2IldqVmoqw/exec";
 
     // Eindeutige ID für diese Übertragung, damit wir sie später
     // im Sheet wiederfinden und bestätigen können.
