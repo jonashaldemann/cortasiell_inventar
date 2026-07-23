@@ -172,34 +172,111 @@ if ("serviceWorker" in navigator) {
 
 async function synchronisieren() {
 
-    alert("TEST 123");
-
     const url =
-        "https://script.google.com/macros/s/AKfycbzZ0D88T19qk35cpKihzd__3nnMoXqba0imNnjLRQDumPUAVkV1GwUUk_F16nM7lY727Q/exec";
+        "https://script.google.com/macros/s/AKfycbyAGvyV0_YfkcEzUfZ3Kc7jPHrerYB9_ljW_N2zYLqBzrHO0SgiB0rsfRD1phSgHWg7rQ/exec";
+
+    // Eindeutige ID für diese Übertragung, damit wir sie später
+    // im Sheet wiederfinden und bestätigen können.
+    const syncId =
+        "sync_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2, 8);
+
+    const payload = {
+        id: syncId,
+        daten: inventur
+    };
+
+    zeigeSyncStatus("Übertrage...");
 
     try {
 
+        // Senden bleibt bewusst no-cors: die Antwort von doPost
+        // wollen wir hier gar nicht lesen, nur die Daten hinschicken.
         await fetch(url, {
             method: "POST",
             mode: "no-cors",
-            body: localStorage.getItem(
-                "cortasiell_inventar"
-            )
+            body: JSON.stringify(payload)
         });
 
-        alert("Inventur übertragen ✅");
+        const bestaetigt = await warteAufBestaetigung(url, syncId);
 
-        localStorage.setItem(
-            "synchronisiert",
-            "ja"
-        );
+        if (bestaetigt) {
+
+            zeigeSyncStatus("Inventur übertragen ✅ (bestätigt)");
+
+            localStorage.setItem(
+                "synchronisiert",
+                "ja"
+            );
+
+        } else {
+
+            zeigeSyncStatus(
+                "⚠️ Gesendet, aber nicht bestätigt. " +
+                "Bitte später erneut versuchen."
+            );
+
+        }
 
     } catch (error) {
 
         console.error(error);
 
-        alert(error);
+        zeigeSyncStatus("❌ Fehler beim Senden: " + error);
 
     }
+
+}
+
+// Fragt per doGet (normaler, unproblematischer Cross-Origin-GET)
+// wiederholt nach, ob die gesendete ID im Sheet angekommen ist.
+async function warteAufBestaetigung(url, syncId, versuche = 5, wartezeitMs = 1500) {
+
+    for (let i = 0; i < versuche; i++) {
+
+        await warte(wartezeitMs);
+
+        try {
+
+            const antwort = await fetch(
+                url + "?checkId=" + encodeURIComponent(syncId)
+            );
+
+            const text = (await antwort.text()).trim();
+
+            if (text === "OK") {
+                return true;
+            }
+
+        } catch (error) {
+
+            console.error("Prüfung fehlgeschlagen:", error);
+
+        }
+
+    }
+
+    return false;
+
+}
+
+function warte(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function zeigeSyncStatus(text) {
+
+    let statusEl = document.getElementById("syncStatus");
+
+    if (!statusEl) {
+
+        statusEl = document.createElement("p");
+        statusEl.id = "syncStatus";
+
+        document.getElementById("frage").appendChild(statusEl);
+
+    }
+
+    statusEl.innerHTML = text;
 
 }
