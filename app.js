@@ -175,15 +175,15 @@ async function synchronisieren() {
     alert("TEST 123");
 
     const url =
-        "https://script.google.com/macros/s/AKfycbzeZDxQWp-wCa-kKQVZsFaIRG3WN6dhOtQLSLq6TZt5vPTHczjwdsVr4pCeW3IGxddOIg/exec";
+        "https://script.google.com/macros/s/AKfycbyzsPLw5bFP0kutxyv7v4Kx2rSedCxKOKJBZaCHcw20Y44vh11hahfHHjg_W7jNg3l2WA/exec";
 
     try {
 
         const response = await fetch(url, {
             method: "POST",
-            body: JSON.stringify({
-                test: "Hallo Cortasiell"
-            })
+            body: localStorage.getItem(
+                "cortasiell_inventar"
+            )
         });
 
         const text = await response.text();
