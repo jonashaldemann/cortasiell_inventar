@@ -2,39 +2,31 @@ console.log("App gestartet");
 
 let inventur = {};
 
-const fragen = [
-    {
-        typ: "info",
-        text: "Zuerst beginnen wir mit der Haushaltskiste."
-    },
-    {
-        typ: "ja_nein",
-        ort: "Haushaltskiste",
-        artikel: "Handseife"
-    },
-    {
-        typ: "ja_nein",
-        ort: "Haushaltskiste",
-        artikel: "Abfallsäcke"
-    },
-    {
-        typ: "info",
-        text: "Nun gehen wir rüber zum Küchenregal."
-    },
-    {
-        typ: "anzahl",
-        ort: "Küchenregal",
-        artikel: "Rotwein"
-    }
-];
+async function ladeFragen() {
+
+    const url =
+        "https://script.google.com/macros/s/AKfycbwyULYD24vxZhq4wL0vdhqBgeMh9bqAeFl-ztSVnJcUb8G145OzfPaefyrtEeEjLuf7hg/exec";
+
+    const response = await fetch(url);
+
+    fragen = await response.json();
+
+    console.log("Fragen geladen:", fragen);
+
+    zeigeFrage();
+}
+
+let fragen = [];
 
 let aktuelleFrage = 0;
 
-zeigeFrage();
+ladeFragen();
 
 function zeigeFrage() {
 
     const frage = fragen[aktuelleFrage];
+
+    console.log(frage);
 
     document.getElementById("fortschritt").innerHTML =
         "Schritt " +
@@ -87,7 +79,7 @@ function zeigeFrage() {
 
 function antwortJa() {
 
-    inventur[fragen[aktuelleFrage].artikel] = "ja";
+    inventur[fragen[aktuelleFrage].produkt] = "ja";
 
     naechsteFrage();
 }
@@ -95,7 +87,7 @@ function antwortJa() {
 
 function antwortNein() {
 
-    inventur[fragen[aktuelleFrage].artikel] = "nein";
+    inventur[fragen[aktuelleFrage].produkt] = "nein";
 
     naechsteFrage();
 }
@@ -138,7 +130,7 @@ function speichereAnzahl() {
     const wert =
         document.getElementById("anzahlFeld").value;
 
-    inventur[fragen[aktuelleFrage].artikel] = wert;
+    inventur[fragen[aktuelleFrage].produkt] = wert;
 
     naechsteFrage();
 }
@@ -173,7 +165,7 @@ if ("serviceWorker" in navigator) {
 async function synchronisieren() {
 
     const url =
-        "https://script.google.com/macros/s/AKfycbz5Q6uVBj3r0z1usTdp_e2VCbZpFoPEDvndm4xh2UYqXkSsVGlIfM-cXWbfEWmbGP8V/exec";
+        "https://script.google.com/macros/s/AKfycbwyULYD24vxZhq4wL0vdhqBgeMh9bqAeFl-ztSVnJcUb8G145OzfPaefyrtEeEjLuf7hg/exec";
 
     // Eindeutige ID für diese Übertragung, damit wir sie später
     // im Sheet wiederfinden und bestätigen können.
