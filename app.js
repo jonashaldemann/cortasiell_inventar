@@ -1,6 +1,6 @@
 console.log("App gestartet");
 
-let inventur = {};
+let inventur = [];
 
 async function ladeFragen() {
 
@@ -113,15 +113,20 @@ const typ =
 
 function antwortJa() {
 
-    inventur[fragen[aktuelleFrage].produkt] = "ja";
-
+    inventur.push({
+        zeile: fragen[aktuelleFrage].zeile,
+        wert: "ja"
+    });
     naechsteFrage();
 }
 
 
 function antwortNein() {
 
-    inventur[fragen[aktuelleFrage].produkt] = "nein";
+    inventur.push({
+        zeile: fragen[aktuelleFrage].zeile,
+        wert: "nein"
+    });
 
     naechsteFrage();
 }
@@ -161,7 +166,10 @@ function speichereAnzahl() {
     const wert =
         document.getElementById("anzahlFeld").value;
 
-    inventur[fragen[aktuelleFrage].produkt] = wert;
+    inventur.push({
+        zeile: fragen[aktuelleFrage].zeile,
+        wert: wert
+    });
 
     naechsteFrage();
 }
