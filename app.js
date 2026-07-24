@@ -24,7 +24,22 @@ ladeFragen();
 
 function zeigeFrage() {
 
+    if (!fragen[aktuelleFrage]) {
+
+        console.log("Keine weitere Frage vorhanden");
+
+        return;
+    }
+
     const frage = fragen[aktuelleFrage];
+
+    console.log(frage);
+
+    console.log(
+        "Typ:",
+        "[" + frage.erfassungstyp + "]"
+    );
+
 
     console.log(
         frage.produkt,
