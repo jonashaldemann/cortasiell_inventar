@@ -95,24 +95,31 @@ function naechsteFrage() {
 
     } else {
 
-        localStorage.setItem(
-            "cortasiell_inventar",
-            JSON.stringify(inventur)
-        );
+        let frageText = frage.produkt;
 
-        document.getElementById("frage").innerHTML =
-            "<h2>Inventur abgeschlossen ✅</h2>";
-        
-        document.getElementById("frage").innerHTML =
-        `
-        <h2>Inventur abgeschlossen ✅</h2>
+        if (frage.erfassungstyp === "vorhanden") {
 
-        <pre>
-        ${JSON.stringify(inventur, null, 2)}
-        </pre>
-        <button onclick="synchronisieren()">
-            Synchronisieren
-        </button>
+            frageText =
+                `Ist ${frage.produkt} vorhanden?`;
+
+        } else if (frage.erfassungstyp === "genügend") {
+
+            frageText =
+                `Ist genügend ${frage.produkt} vorhanden?`;
+
+        } else if (!isNaN(frage.erfassungstyp)) {
+
+            frageText =
+                `Sind mindestens ${frage.erfassungstyp} ${frage.einheit} ${frage.produkt} vorhanden?`;
+
+        }
+
+        document.getElementById("frage").innerHTML = `
+            <h2>${frageText}</h2>
+
+            <button onclick="antwortJa()">Ja</button>
+
+            <button onclick="antwortNein()">Nein</button>
         `;
     }
 
