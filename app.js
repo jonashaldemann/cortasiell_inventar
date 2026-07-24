@@ -26,7 +26,11 @@ function zeigeFrage() {
 
     const frage = fragen[aktuelleFrage];
 
-    console.log(frage);
+    console.log(
+        frage.produkt,
+        frage.erfassungstyp,
+        typeof frage.erfassungstyp
+    );
 
     document.getElementById("fortschritt").innerHTML =
         "Schritt " +
@@ -37,7 +41,10 @@ function zeigeFrage() {
     document.getElementById("ort").innerHTML =
         frage.ort;
 
-    if (frage.erfassungstyp === "Menge") {
+const typ =
+    String(frage.erfassungstyp).trim();
+
+    if (typ === "Menge") {
 
         document.getElementById("frage").innerHTML = `
             <h2>${frage.produkt}</h2>
@@ -58,14 +65,33 @@ function zeigeFrage() {
 
     } else {
 
+        let frageText = frage.produkt;
+
+        if (typ === "vorhanden") {
+
+            frageText =
+                `Ist ${frage.produkt} vorhanden?`;
+
+        } else if (typ === "genügend") {
+
+            frageText =
+                `Ist genügend ${frage.produkt} vorhanden?`;
+
+        } else if (!isNaN(Number(typ))) {
+
+            frageText =
+                `Sind mindestens ${typ} ${frage.einheit} ${frage.produkt} vorhanden?`;
+
+        }
+
         document.getElementById("frage").innerHTML = `
-            <h2>${frage.produkt}</h2>
+            <h2>${frageText}</h2>
 
             <button onclick="antwortJa()">Ja</button>
+
             <button onclick="antwortNein()">Nein</button>
         `;
-
-    }
+    }    
 
 }
 
@@ -95,31 +121,21 @@ function naechsteFrage() {
 
     } else {
 
-        let frageText = frage.produkt;
-
-        if (frage.erfassungstyp === "vorhanden") {
-
-            frageText =
-                `Ist ${frage.produkt} vorhanden?`;
-
-        } else if (frage.erfassungstyp === "genügend") {
-
-            frageText =
-                `Ist genügend ${frage.produkt} vorhanden?`;
-
-        } else if (!isNaN(frage.erfassungstyp)) {
-
-            frageText =
-                `Sind mindestens ${frage.erfassungstyp} ${frage.einheit} ${frage.produkt} vorhanden?`;
-
-        }
+        localStorage.setItem(
+            "cortasiell_inventar",
+            JSON.stringify(inventur)
+        );
 
         document.getElementById("frage").innerHTML = `
-            <h2>${frageText}</h2>
+            <h2>Inventur abgeschlossen ✅</h2>
 
-            <button onclick="antwortJa()">Ja</button>
+            <pre>
+${JSON.stringify(inventur, null, 2)}
+            </pre>
 
-            <button onclick="antwortNein()">Nein</button>
+            <button onclick="synchronisieren()">
+                Synchronisieren
+            </button>
         `;
     }
 
