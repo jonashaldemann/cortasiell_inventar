@@ -34,38 +34,20 @@ function zeigeFrage() {
         " von " +
         fragen.length;
 
-    if (frage.typ === "info") {
+    document.getElementById("ort").innerHTML =
+        frage.ort;
 
-        document.getElementById("ort").innerHTML = "";
-
-        document.getElementById("frage").innerHTML = `
-            <h2>${frage.text}</h2>
-            <button onclick="naechsteFrage()">Weiter</button>
-        `;
-
-    } else if (frage.typ === "ja_nein") {
-
-        document.getElementById("ort").innerHTML =
-            frage.ort;
+    if (frage.erfassungstyp === "Menge") {
 
         document.getElementById("frage").innerHTML = `
-            <h2>${frage.artikel}</h2>
-            <button onclick="antwortJa()">Ja</button>
-            <button onclick="antwortNein()">Nein</button>
-        `;
+            <h2>${frage.produkt}</h2>
 
-    } else if (frage.typ === "anzahl") {
-
-        document.getElementById("ort").innerHTML =
-            frage.ort;
-
-        document.getElementById("frage").innerHTML = `
-            <h2>${frage.artikel}</h2>
+            <p>Einheit: ${frage.einheit}</p>
 
             <input
                 type="number"
                 id="anzahlFeld"
-                value="0"
+                value="${frage.info || 0}"
                 min="0"
             >
 
@@ -73,7 +55,18 @@ function zeigeFrage() {
                 Speichern & Weiter
             </button>
         `;
+
+    } else {
+
+        document.getElementById("frage").innerHTML = `
+            <h2>${frage.produkt}</h2>
+
+            <button onclick="antwortJa()">Ja</button>
+            <button onclick="antwortNein()">Nein</button>
+        `;
+
     }
+
 }
 
 
