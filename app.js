@@ -5,7 +5,7 @@ let inventur = [];
 async function ladeFragen() {
 
     const url =
-        "https://script.google.com/macros/s/AKfycbzh_UBquxiAS2avMq6nvXZEitz9SQNDec6gXMn6KlRm9DI0hd3naDzLRYqPyT4Dsu7AKw/exec";
+        "https://script.google.com/macros/s/AKfycbzU2YazqTp3G-cWCZtnmCg8jE2xWcbqiSYzSpLJCti0Ymsf7HKys3tbuRt_w5gJcprWfg/exec";
 
     const response = await fetch(url);
 
